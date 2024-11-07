@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  www:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - ./www:/var/www/html
+    networks:
+      - mynetwork 
+  db:
+    image: postgres:latest
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: WEB_DB
+    ports:
+      - "5432:5432"
+    networks:
+      - mynetwork  
+
+  pgAdmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: Xelan@pro.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "888:80"
+    networks:
+      - mynetwork  
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+
+networks:
+  mynetwork: 
